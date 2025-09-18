@@ -1,0 +1,36 @@
+{% extends 'default.html' %}
+{% load static %}
+
+{% block title %}Вход{% endblock %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'css/news.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="news-container">
+    <h1>Вход</h1>
+    <hr>
+
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            Неверный email или пароль.
+        </div>
+    {% endif %}
+
+    <form method="post" action="{% url 'account_login' %}">
+        {% csrf_token %}
+        <p>
+            <label for="{{ form.login.id_for_label }}">Email:</label>
+            {{ form.login }}
+        </p>
+        <p>
+            <label for="{{ form.password.id_for_label }}">Пароль:</label>
+            {{ form.password }}
+        </p>
+        <button type="submit" class="btn btn-primary">Войти</button>
+    </form>
+
+    <p><a href="{% url 'account_signup' %}">Нет аккаунта? Зарегистрироваться</a></p>
+</div>
+{% endblock %}

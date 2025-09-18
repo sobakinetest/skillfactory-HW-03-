@@ -1,0 +1,31 @@
+{% extends 'default.html' %}
+{% load custom_filters %}
+{% load static %}
+
+{% block title %}
+    {{ newsdetail.title|censor|default:"Статья не найдена" }}
+{% endblock %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'css/news.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="news-container">
+    {% if newsdetail %}
+        <h1>{{ newsdetail.title|censor }}</h1>
+        <p><strong>Тип:</strong> Статья</p>
+        <p><strong>Автор:</strong> {{ newsdetail.author.user.username }}</p>
+        <p><strong>Дата публикации:</strong> {{ newsdetail.created_at|date:"d.m.Y" }}</p>
+        <hr>
+        <div class="news-content">{{ newsdetail.content|censor|linebreaks }}</div>
+    {% else %}
+        <div class="no-news">
+            <h1>Статья не найдена</h1>
+            <hr>
+            <p>Запрошенная статья не существует или была удалена.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

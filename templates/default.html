@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Новостной портал — свежие новости и статьи" />
+    <title>{% block title %}NewsPortal{% endblock %}</title>
+    {% load static %}
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+</head>
+<body>
+    <!-- Responsive navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">NewsPortal</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarResponsive"
+                    aria-controls="navbarResponsive" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <!-- Ссылка на список новостей -->
+                    <li class="nav-item {% if request.path == '/news/' %}active{% endif %}">
+                        <a class="nav-link" href="/news/">Новости</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/news/search/">Поиск</a>
+                    </li>
+
+                    <!-- Аутентификация -->
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <span class="nav-link text-success">Привет, {{ user.username }}!</span>
+                        </li>
+                        {% if is_not_author %}
+                        <li class="nav-item">
+                            <a href="{% url 'news:make_me_author' %}" class="nav-link btn btn-outline-warning btn-sm my-1 mx-1">Стать автором</a>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-danger btn-sm my-1" href="{% url 'account_logout' %}">Выйти</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-primary btn-sm my-1" href="{% url 'account_login' %}">Войти</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-secondary btn-sm my-1" href="{% url 'account_signup' %}">Регистрация</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page content -->
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

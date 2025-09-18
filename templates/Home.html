@@ -1,0 +1,15 @@
+<!-- templates/home.html -->
+{% extends 'default.html' %}
+
+{% block title %}
+Главная
+{% endblock %}
+
+{% block content %}
+  <h1>Добро пожаловать на NewsPortal!</h1>
+  <p>Выберите раздел в меню:</p>
+  <ul>
+    <li><a href="/news/">Смотреть все новости</a></li>
+    <li><a href="/admin/">Админ</a></li>
+  </ul>
+{% endblock %}

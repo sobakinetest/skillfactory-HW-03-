@@ -1,0 +1,89 @@
+/* news.css - стили для страниц новостей */
+
+.news-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.news-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-family: Arial, sans-serif;
+}
+
+.news-table th {
+    background-color: #f8f9fa;
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.news-table td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #dee2e6;
+    vertical-align: top;
+}
+
+.news-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.news-table a {
+    color: #0066cc;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.news-table a:hover {
+    text-decoration: underline;
+    color: #004499;
+}
+
+.no-news {
+    padding: 20px;
+    text-align: center;
+    color: #6c757d;
+    font-size: 1.2em;
+}
+
+/* Дополнения для news.css */
+
+/* Стили для детального просмотра */
+.news-table.detail-view {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.news-table.detail-view th {
+    width: 20%;
+    background-color: #f8f9fa;
+    padding: 12px 15px;
+    text-align: left;
+    border-right: 2px solid #dee2e6;
+}
+
+.news-table.detail-view td {
+    padding: 12px 15px;
+    vertical-align: top;
+}
+
+.news-content {
+    white-space: pre-line;
+    line-height: 1.6;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+    .news-table.detail-view th,
+    .news-table.detail-view td {
+        display: block;
+        width: 100%;
+    }
+
+    .news-table.detail-view th {
+        border-right: none;
+        border-bottom: 2px solid #dee2e6;
+    }
+}

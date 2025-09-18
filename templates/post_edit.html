@@ -1,0 +1,20 @@
+{% extends 'default.html' %}
+{% load static %}
+
+{% block title %}Редактировать{% endblock %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'css/news.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="news-container">
+    <h1>Редактировать</h1>
+    <hr>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Сохранить</button>
+    </form>
+</div>
+{% endblock %}

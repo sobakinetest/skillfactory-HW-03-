@@ -1,0 +1,78 @@
+{% extends 'default.html' %}
+{% load custom_filters %}
+{% load static %}
+
+{% block title %}Поиск новостей{% endblock %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'css/news.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="news-container">
+    <h1>Поиск новостей</h1>
+    <hr>
+
+    <!-- Форма фильтрации -->
+    <form method="get" class="filter-form">
+        <div>
+            {{ filter.form.title.label_tag }}
+            {{ filter.form.title }}
+        </div>
+
+        <div>
+            {{ filter.form.author.label_tag }}
+            {{ filter.form.author }}
+        </div>
+
+        <div>
+            {{ filter.form.created_at.label_tag }}
+            {{ filter.form.created_at }}
+        </div>
+
+        <br>
+        <button type="submit" class="btn btn-primary">Найти</button>
+    </form>
+
+    <hr>
+
+    <!-- Результаты поиска -->
+    {% if filter.qs %}
+        <h3>Найдено: {{ filter.qs|length }} новостей</h3>
+
+        <!-- Верхняя пагинация -->
+        {% if is_paginated %}
+            {% include "pagination.html" %}
+        {% endif %}
+
+        <table class="news-table">
+            <thead>
+                <tr>
+                    <th>Заголовок</th>
+                    <th>Автор</th>
+                    <th>Дата</th>
+                    <th>Текст</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for news in page_obj %}
+                <tr>
+                    <td><a href="{% url 'news:news_detail' news.id %}">{{ news.title|censor }}</a></td>
+                    <td>{{ news.author.user.username }}</td>
+                    <td>{{ news.created_at|date:"d.m.Y" }}</td>
+                    <td>{{ news.content|truncatewords:20|censor }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Нижняя пагинация -->
+        {% if is_paginated %}
+            {% include "pagination.html" %}
+        {% endif %}
+
+    {% else %}
+        <p>Новости не найдены.</p>
+    {% endif %}
+</div>
+{% endblock %}

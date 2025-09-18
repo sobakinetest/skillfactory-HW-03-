@@ -1,0 +1,48 @@
+{% extends 'default.html' %}
+{% load custom_filters %}
+{% load static %}
+
+{% block title %}Новости{% endblock %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'css/news.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="news-container">
+    <h1>Всего новостей: {{ paginator.count }}</h1>
+    <hr>
+
+    {% if newslist %}
+        <table class="news-table">
+            <thead>
+                <tr>
+                    <th>Заголовок</th>
+                    <th>Дата</th>
+                    <th>Текст</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for news in newslist %}
+                <tr>
+                    <td>
+                        {% if news.post_type == 'NW' %}
+                        <a href="{% url 'news:news_detail' news.pk %}">{{ news.title|censor }}</a>
+                        {% elif news.post_type == 'AR' %}
+                        <a href="{% url 'articles:article_detail' news.pk %}">{{ news.title|censor }}</a>
+                        {% endif %}
+                    </td>
+                    <td>{{ news.created_at|date:"d.m.Y" }}</td>
+                    <td>{{ news.content|truncatewords:20|censor|default:"[Текст отсутствует]" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="no-news">Новостей нет!</div>
+    {% endif %}
+</div>
+{% if is_paginated %}
+    {% include "pagination.html" %}
+{% endif %}
+{% endblock %}

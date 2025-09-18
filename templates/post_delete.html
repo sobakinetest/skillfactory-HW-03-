@@ -1,0 +1,20 @@
+{% extends 'default.html' %}
+{% load static %}
+
+{% block title %}Удалить{% endblock %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'css/news.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="news-container">
+    <h1>Удалить "{{ object.title }}"?</h1>
+    <hr>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Да</button>
+        <a href="{{ object.get_absolute_url }}">Отмена</a>
+    </form>
+</div>
+{% endblock %}

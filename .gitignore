@@ -1,0 +1,37 @@
+# Временные файлы IDE
+*.swp
+*.swo
+*.pyc
+__pycache__/
+.idea/
+.vscode/
+
+# Файлы базы данных
+*.sqlite3
+*.db
+
+# Виртуальное окружение
+venv/
+.env/
+.venv/
+env/
+
+# Файлы окружения
+.env
+.env.local
+.env.*.local
+
+# Логи и кэш
+*.log
+*.cache
+*.pid
+
+# Установочные файлы
+pip-selfcheck.json
+
+*/migrations/*.py
+!*/migrations/__init__.py
+
+generate_test_data.py
+
+randomize_post_dates.py
