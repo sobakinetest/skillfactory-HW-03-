@@ -1,5 +1,5 @@
 import django_filters
-from .models import Post, Author
+from .models import Post, Author, Category
 from django import forms
 
 
@@ -23,6 +23,16 @@ class NewsFilter(django_filters.FilterSet):
         label='Дата публикации (после)',
         widget=forms.DateInput(attrs={'type': 'date'})
     )
+
+    categories = django_filters.ModelMultipleChoiceFilter(
+        field_name='categories',
+        queryset=Category.objects.all(),
+        label='Категории',
+        widget=forms.SelectMultiple,
+        to_field_name='id',
+        conjoined=True
+    )
+
 
     class Meta:
         model = Post

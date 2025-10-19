@@ -6,6 +6,11 @@ from django.urls import reverse
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
+    subscribers = models.ManyToManyField(
+        User,
+        blank=True,
+        related_name='subscribed_categories'
+    )
 
     def __str__(self):
         return self.name
@@ -39,7 +44,7 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
     rating = models.IntegerField(default=0)
-    categories = models.ManyToManyField(Category, through='PostCategory')
+    categories = models.ManyToManyField(Category, through='PostCategory', related_name='posts')
 
     def like(self):
         self.rating += 1
@@ -62,7 +67,7 @@ class Post(models.Model):
             return reverse('articles:article_detail', kwargs={'pk': self.pk})
 
 class PostCategory(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_categories')
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
     class Meta:
@@ -89,3 +94,5 @@ class Comment(models.Model):
 
     class Meta:
         ordering = ['-created_at']
+
+

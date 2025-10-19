@@ -21,6 +21,11 @@
         </div>
 
         <div>
+            {{ filter.form.categories.label_tag }}
+            {{ filter.form.categories }}
+        </div>
+
+        <div>
             {{ filter.form.author.label_tag }}
             {{ filter.form.author }}
         </div>
@@ -57,7 +62,13 @@
             <tbody>
                 {% for news in page_obj %}
                 <tr>
-                    <td><a href="{% url 'news:news_detail' news.id %}">{{ news.title|censor }}</a></td>
+                    <td>
+                        {% if news.post_type == 'NW' %}
+                        <a href="{% url 'news:news_detail' news.pk %}">{{ news.title|censor }}</a>
+                        {% elif news.post_type == 'AR' %}
+                        <a href="{% url 'articles:article_detail' news.pk %}">{{ news.title|censor }}</a>
+                        {% endif %}
+                    </td>
                     <td>{{ news.author.user.username }}</td>
                     <td>{{ news.created_at|date:"d.m.Y" }}</td>
                     <td>{{ news.content|truncatewords:20|censor }}</td>

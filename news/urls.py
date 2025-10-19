@@ -7,6 +7,9 @@ from .views import (
     NewsEdit,
     NewsDelete,
     make_me_author,
+    CategoryListView,
+    subscribe,
+    unsubscribe,
 )
 
 app_name = 'news'
@@ -18,5 +21,8 @@ urlpatterns = [
     path('create/', NewsCreate.as_view(), name='news_create'),
     path('<int:pk>/edit/', NewsEdit.as_view(), name='news_edit'),
     path('<int:pk>/delete/', NewsDelete.as_view(), name='news_delete'),
-    path('make_author/', make_me_author, name = 'make_me_author')
+    path('make_author/', make_me_author, name = 'make_me_author'),
+    path('categories/', CategoryListView.as_view(), name='category_list'),
+    path('subscribe/<int:pk>/', subscribe, name='subscribe'),
+    path('unsubscribe/<int:pk>/', unsubscribe, name='unsubscribe')
 ]

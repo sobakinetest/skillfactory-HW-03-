@@ -15,6 +15,15 @@
 <div class="news-container">
     {% if newsdetail %}
         <h1>{{ newsdetail.title|censor }}</h1>
+        <p>
+        <strong>Категории:</strong>
+        {% for category in newsdetail.categories.all %}
+            <a href="{% url 'news:category_list' %}#cat-{{ category.id }}">{{ category.name }}</a>
+            {% if not forloop.last %}, {% endif %}
+        {% empty %}
+            Не указаны
+        {% endfor %}
+        </p>
         <p><strong>Тип:</strong> Статья</p>
         <p><strong>Автор:</strong> {{ newsdetail.author.user.username }}</p>
         <p><strong>Дата публикации:</strong> {{ newsdetail.created_at|date:"d.m.Y" }}</p>
@@ -29,3 +38,4 @@
     {% endif %}
 </div>
 {% endblock %}
+

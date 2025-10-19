@@ -1,6 +1,7 @@
 {% extends 'default.html' %}
 {% load custom_filters %}
 {% load static %}
+<link rel="stylesheet" href="{% static 'css/news.css' %}">
 
 {% block title %}Новости{% endblock %}
 
@@ -19,6 +20,7 @@
                 <tr>
                     <th>Заголовок</th>
                     <th>Дата</th>
+                    <th>Категории</th>
                     <th>Текст</th>
                 </tr>
             </thead>
@@ -27,12 +29,19 @@
                 <tr>
                     <td>
                         {% if news.post_type == 'NW' %}
-                        <a href="{% url 'news:news_detail' news.pk %}">{{ news.title|censor }}</a>
+                            <a href="{% url 'news:news_detail' news.pk %}">{{ news.title|censor }}</a>
                         {% elif news.post_type == 'AR' %}
-                        <a href="{% url 'articles:article_detail' news.pk %}">{{ news.title|censor }}</a>
+                            <a href="{% url 'articles:article_detail' news.pk %}">{{ news.title|censor }}</a>
                         {% endif %}
                     </td>
                     <td>{{ news.created_at|date:"d.m.Y" }}</td>
+                    <td>
+                        {% for category in news.categories.all %}
+                        <span class="post-category-tag">{{ category.name }}</span>
+                        {% empty %}
+                        <span class="no-category">Без категории</span>
+                        {% endfor %}
+                    </td>
                     <td>{{ news.content|truncatewords:20|censor|default:"[Текст отсутствует]" }}</td>
                 </tr>
                 {% endfor %}
@@ -41,8 +50,9 @@
     {% else %}
         <div class="no-news">Новостей нет!</div>
     {% endif %}
+
+    {% if is_paginated %}
+        {% include "pagination.html" %}
+    {% endif %}
 </div>
-{% if is_paginated %}
-    {% include "pagination.html" %}
-{% endif %}
 {% endblock %}
